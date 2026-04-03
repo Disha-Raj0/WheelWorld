@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WheelWorld - Find Your Perfect Car in India</title>
+    <link rel="stylesheet" href="home.css" />
+    <link rel="icon" type="image/png" href="images/logo.png" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <a href="home.html" class="logo">
+        <img
+          src="images/logo.png"
+          alt="WheelWorld"
+          onerror="this.style.display = 'none'"
+        />
+        Wheel<span>World</span>
+      </a>
+      <nav>
+        <a href="home.html" class="active show-mobile">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="wishlist.html" class="show-mobile">
+          ❤️ Wishlist <span id="wishCount" class="badge">0</span>
+        </a>
+        <a href="login.html" id="loginNav" class="show-mobile">Login</a>
+        <a
+          href="#"
+          id="logoutNav"
+          onclick="logout()"
+          style="display: none"
+          class="show-mobile"
+          >Logout</a
+        >
+        <button
+          class="nav-btn outline"
+          id="loginBtn"
+          onclick="window.location.href = 'login.html'"
+        >
+          Login
+        </button>
+        <button
+          class="nav-btn solid"
+          id="logoutBtn"
+          onclick="logout()"
+          style="display: none"
+        >
+          Logout
+        </button>
+        <button
+          class="dark-toggle"
+          onclick="toggleDarkMode()"
+          title="Toggle dark mode"
+        >
+          🌙
+        </button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <div class="tag">India's #1 Car Discovery Platform</div>
+        <h1>Find Your <span>Dream Car</span> at the Best Price</h1>
+        <p>
+          Explore 500+ cars across all budgets and body styles. Smart search,
+          real prices, instant booking.
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="num">500+</div>
+            <div class="label">Car Models</div>
+          </div>
+          <div class="stat">
+            <div class="num">50+</div>
+            <div class="label">Brands</div>
+          </div>
+          <div class="stat">
+            <div class="num">10L+</div>
+            <div class="label">Happy Buyers</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-card">
+        <h2>Find Your Right Car</h2>
+
+        <div class="tabs">
+          <button class="tab active">🚗 New Car</button>
+        </div>
+
+        <!-- NEW CAR -->
+        <div id="newCarSection">
+          <div class="options">
+            <label
+              ><input
+                type="radio"
+                name="newFilter"
+                value="budget"
+                checked
+                onclick="showBudgetNew()"
+              />
+              By Budget</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="newFilter"
+                value="brand"
+                onclick="showBrand()"
+              />
+              By Brand</label
+            >
+          </div>
+          <div id="budgetSection">
+            <select id="newBudget">
+              <option value="">Select Budget</option>
+              <option>1 - 5 Lakh</option>
+              <option>5 - 10 Lakh</option>
+              <option>10 - 20 Lakh</option>
+              <option>20 - 35 Lakh</option>
+              <option>35 - 50 Lakh</option>
+              <option>50 Lakh - 1 Crore</option>
+              <option>Above 1 Crore</option>
+            </select>
+            <select id="VehicleType">
+              <option value="">All Body Types</option>
+              <option>SUV</option>
+              <option>Sedan</option>
+              <option>Hatchback</option>
+              <option>MUV</option>
+              <option>Luxury</option>
+              <option>Super Luxury</option>
+              <option>Convertible</option>
+              <option>Hybrid</option>
+              <option>Coupe</option>
+              <option>Pickup Truck</option>
+            </select>
+          </div>
+          <div id="brandSection" style="display: none">
+            <select id="brandSelect" onchange="updateModels()">
+              <option value="">Select Brand</option>
+              <option>Maruti Suzuki</option>
+              <option>Hyundai</option>
+              <option>Tata</option>
+              <option>Honda</option>
+              <option>Toyota</option>
+              <option>Kia</option>
+              <option>MG</option>
+              <option>Mahindra</option>
+              <option>Volkswagen</option>
+            </select>
+            <select id="modelSelect">
+              <option value="">Select Model</option>
+            </select>
+          </div>
+        </div>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="🔍  Search by car name..."
+        />
+        <button class="search-btn" onclick="searchCars()">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          Search Cars
+        </button>
+      </div>
+    </section>
+
+    <!-- SEARCH RESULTS -->
+    <div class="results-section" id="resultsSection" style="display: none">
+      <div class="results-header">
+        <div class="results-count">
+          <strong id="resultsCount">0</strong> cars found
+        </div>
+        <button
+          onclick="clearResults()"
+          style="
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+          "
+        >
+          ✕ Clear
+        </button>
+      </div>
+      <div id="results"></div>
+    </div>
+
+    <!-- BODY TYPES -->
+    <section class="body-types-section">
+      <div class="section-header">
+        <h2>Browse by <span>Body Type</span></h2>
+        <a href="#" class="see-all">View All →</a>
+      </div>
+      <div class="body-types-grid">
+        <a class="body-type-card" onclick="filterByType('SUV')"
+          ><div class="icon">🚙</div>
+          <span>SUV</span></a
+        >
+        <a class="body-type-card" onclick="filterByType('Sedan')"
+          ><div class="icon">🚗</div>
+          <span>Sedan</span></a
+        >
+        <a class="body-type-card" onclick="filterByType('Hatchback')"
+          ><div class="icon">🚘</div>
+          <span>Hatchback</span></a
+        >
+        <a class="body-type-card" onclick="filterByType('Luxury')"
+          ><div class="icon">🏎️</div>
+          <span>Luxury</span></a
+        >
+        <a class="body-type-card" onclick="filterByType('MUV')"
+          ><div class="icon">🚐</div>
+          <span>MUV / MPV</span></a
+        >
+        <a class="body-type-card" onclick="filterByType('Electric')"
+          ><div class="icon">⚡</div>
+          <span>Electric/Hybrid</span></a
+        >
+        <a class="body-type-card" onclick="filterByType('Coupe')"
+          ><div class="icon">🏁</div>
+          <span>Coupe</span></a
+        >
+        <a class="body-type-card" onclick="filterByType('Convertible')"
+          ><div class="icon">🌤️</div>
+          <span>Convertible</span></a
+        >
+      </div>
+    </section>
+
+    <!-- POPULAR BRANDS -->
+    <section class="brands-section">
+      <div class="section-header">
+        <h2 style="color: white">
+          Popular <span style="color: var(--primary)">Brands</span>
+        </h2>
+      </div>
+      <div class="brands-grid">
+        <a class="brand-card" onclick="filterByBrand('Maruti')"
+          ><div class="brand-icon">
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/020/336/024/original/maruti-logo-maruti-icon-free-free-vector.jpg"
+              alt="Maruti logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">Maruti</div></a
+        >
+        <a class="brand-card" onclick="filterByBrand('Hyundai')"
+          ><div class="brand-icon">
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/020/500/331/non_2x/hyundai-logo-brand-symbol-with-name-blue-design-south-korean-car-automobile-illustration-free-vector.jpg"
+              alt="Hyundai logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">Hyundai</div></a
+        >
+        <a class="brand-card" onclick="filterByBrand('Tata')"
+          ><div class="brand-icon">
+            <img
+              src="https://th.bing.com/th/id/R.1eae7d835639cfc01691652c9e7412bc?rik=Y3mr6zrUpJ6cVQ&riu=http%3a%2f%2flofrev.net%2fwp-content%2fphotos%2f2014%2f08%2fTata-Logo.jpg&ehk=NJ1tUqQLL8xyfq3Y9%2b0NE4KgO0t2PPFLfV2qayuup3I%3d&risl=&pid=ImgRaw&r=0"
+              alt="Tata logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">Tata</div></a
+        >
+        <a class="brand-card" onclick="filterByBrand('Honda')"
+          ><div class="brand-icon">
+            <img
+              src="https://th.bing.com/th/id/R.27b0b67cdf9ad5e8e7ef21fcf0f265c2?rik=fIePzUEcCGoWcQ&riu=http%3a%2f%2fwww.pixelstalk.net%2fwp-content%2fuploads%2f2016%2f05%2fHonda-Logo-High-Definition-Backgrounds.png&ehk=FhtmbjyteXmiuSjraHFpaAhA2mFsT0MhrvboVRI9obI%3d&risl=&pid=ImgRaw&r=0"
+              alt="Honda logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">Honda</div></a
+        >
+        <a class="brand-card" onclick="filterByBrand('Toyota')"
+          ><div class="brand-icon">
+            <img
+              src="https://th.bing.com/th/id/R.28af9f9e7d9a24312579eeb763670105?rik=LdtMaMFfR0XyfA&riu=http%3a%2f%2fwww.car-brand-names.com%2fwp-content%2fuploads%2f2015%2f07%2fToyota-emblem-3.jpg&ehk=XzpjNK%2bJcTTvYi0km9tQ3CBt%2bzZ2Sua1b%2bi%2bKFza%2bJ0%3d&risl=&pid=ImgRaw&r=0"
+              alt="Toyota logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">Toyota</div></a
+        >
+        <a class="brand-card" onclick="filterByBrand('Kia')"
+          ><div class="brand-icon">
+            <img
+              src="https://th.bing.com/th/id/OIP.vAXWE2t9vRb4SdHWrdEN6wHaHa?w=154&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+              alt="Kia logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">Kia</div></a
+        >
+        <a class="brand-card" onclick="filterByBrand('MG')"
+          ><div class="brand-icon">
+            <img
+              src="https://th.bing.com/th/id/OIP.8QolJDzyz2BbZpnZZm8ysAHaEK?w=281&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+              alt="MG logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">MG</div></a
+        >
+        <a class="brand-card" onclick="filterByBrand('Mahindra')"
+          ><div class="brand-icon">
+            <img
+              src="https://th.bing.com/th/id/OIP.2FTvcsyZPTQabUBdtI72HgHaFj?w=249&h=187&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+              alt="Mahindra logo"
+              height="70px"
+              width="70px"
+            />
+          </div>
+          <div class="brand-name">Mahindra</div></a
+        >
+      </div>
+    </section>
+
+    <!-- RECOMMENDED CARS -->
+    <section class="recommendations">
+      <div class="section-header">
+        <h2>Recommended <span>For You</span></h2>
+        <a href="#" class="see-all">View All →</a>
+      </div>
+      <div id="recommendationList"></div>
+    </section>
+
+    <!-- WHY WHEELWORLD -->
+    <section class="why-us">
+      <div class="section-header">
+        <h2>Why Choose <span>WheelWorld?</span></h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🔍</div>
+          <h3>Smart Search</h3>
+          <p>
+            Filter 500+ cars by budget, type, and brand with real-time results.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">❤️</div>
+          <h3>Wishlist</h3>
+          <p>Save and compare your favourite cars side by side anytime.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💳</div>
+          <h3>Simulated Booking</h3>
+          <p>
+            Experience seamless booking and payment flow like real platforms.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📊</div>
+          <h3>Detailed Specs</h3>
+          <p>Full engine, mileage, safety and feature data for every car.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo" style="margin-bottom: 12px">
+            Wheel<span>World</span>
+          </div>
+          <p>
+            India's modern car discovery platform. Explore, compare and book
+            your next car with confidence.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="home.html">Home</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+          <a href="wishlist.html">My Wishlist</a>
+        </div>
+        <div class="footer-col">
+          <h4>Browse Cars</h4>
+          <a href="#" onclick="filterByType('SUV')">SUV</a>
+          <a href="#" onclick="filterByType('Sedan')">Sedan</a>
+          <a href="#" onclick="filterByType('Hatchback')">Hatchback</a>
+          <a href="#" onclick="filterByType('Luxury')">Luxury</a>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <a href="login.html">Login</a>
+          <a href="register.html">Register</a>
+          <a href="wishlist.html">Wishlist</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 <span>WheelWorld</span>. All rights reserved.</span>
+        <span>Made with ❤️ in India</span>
+      </div>
+    </footer>
+
+    <!-- CAR MODAL -->
+    <div
+      id="carModal"
+      class="modal"
+      onclick="if (event.target === this) closeModal();"
+    >
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="home.js"></script>
+  </body>
+</html>
