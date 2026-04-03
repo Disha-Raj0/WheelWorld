@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - WheelWorld</title>
+    <link rel="stylesheet" href="home.css" />
+    <style>
+      .contact-page {
+        min-height: calc(100vh - 64px);
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+      }
+      .contact-wrapper {
+        display: flex;
+        width: 860px;
+        max-width: 100%;
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+      }
+      .contact-info {
+        background: linear-gradient(
+          160deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        padding: 52px 40px;
+        width: 300px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      .contact-info h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+      }
+      .contact-info p {
+        font-size: 14px;
+        opacity: 0.85;
+        line-height: 1.7;
+      }
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .contact-item .icon {
+        font-size: 20px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .contact-item div {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+      .contact-item strong {
+        display: block;
+        font-weight: 700;
+        opacity: 1;
+        margin-bottom: 2px;
+      }
+      .contact-form-wrapper {
+        flex: 1;
+        padding: 52px 40px;
+      }
+      .contact-form-wrapper h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--navy);
+        margin-bottom: 6px;
+      }
+      .contact-form-wrapper p {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 32px;
+      }
+      .form-row {
+        display: flex;
+        gap: 16px;
+      }
+      .form-row .field-group {
+        flex: 1;
+      }
+      .field-group {
+        margin-bottom: 18px;
+      }
+      .field-group label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+      }
+      .field-group input,
+      .field-group textarea,
+      .field-group select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: "Outfit", sans-serif;
+        outline: none;
+        transition: var(--transition);
+        color: var(--text);
+        background: white;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+      .field-group input:focus,
+      .field-group textarea:focus,
+      .field-group select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(232, 56, 13, 0.1);
+      }
+      .field-group textarea {
+        resize: none;
+        height: 110px;
+      }
+      .submit-btn {
+        width: 100%;
+        padding: 13px;
+        background: var(--primary);
+        border: none;
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-family: "Outfit", sans-serif;
+      }
+      .submit-btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(232, 56, 13, 0.3);
+      }
+      @media (max-width: 700px) {
+        .contact-info {
+          display: none;
+        }
+        .contact-form-wrapper {
+          padding: 40px 24px;
+        }
+        .form-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="logo">Wheel<span>World</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="wishlist.html">❤️ Wishlist</a>
+        <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+      </nav>
+    </header>
+
+    <div class="contact-page">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <div>
+            <div style="font-size: 36px; margin-bottom: 12px">📩</div>
+            <h2>Get In Touch</h2>
+            <p>
+              Have questions about a car or need buying advice? We're here to
+              help!
+            </p>
+          </div>
+          <div>
+            <div class="contact-item">
+              <div class="icon">📍</div>
+              <div>
+                <strong>Address</strong>123 Auto Nagar, Chennai, Tamil Nadu
+                600001
+              </div>
+            </div>
+            <div class="contact-item" style="margin-top: 16px">
+              <div class="icon">📞</div>
+              <div><strong>Phone</strong>+91 98765 43210</div>
+            </div>
+            <div class="contact-item" style="margin-top: 16px">
+              <div class="icon">✉️</div>
+              <div><strong>Email</strong>support@wheelworld.in</div>
+            </div>
+            <div class="contact-item" style="margin-top: 16px">
+              <div class="icon">🕐</div>
+              <div><strong>Working Hours</strong>Mon–Sat, 9AM to 6PM IST</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+          <h2>Send Us a Message</h2>
+          <p>Fill out the form and we'll get back to you within 24 hours.</p>
+
+          <div class="form-row">
+            <div class="field-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Rahul" />
+            </div>
+            <div class="field-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Sharma" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Email</label>
+            <input type="email" placeholder="rahul@example.com" />
+          </div>
+
+          <div class="field-group">
+            <label>Subject</label>
+            <select>
+              <option>General Enquiry</option>
+              <option>Car Booking Help</option>
+              <option>Pricing Information</option>
+              <option>Technical Support</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us how we can help you..."></textarea>
+          </div>
+
+          <button class="submit-btn" onclick="sendMessage()">
+            Send Message →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function sendMessage() {
+        const inputs = document.querySelectorAll(
+          ".field-group input, .field-group textarea",
+        );
+        for (const inp of inputs) {
+          if (!inp.value.trim()) {
+            inp.focus();
+            inp.style.borderColor = "var(--primary)";
+            return;
+          }
+          inp.style.borderColor = "";
+        }
+        const btn = document.querySelector(".submit-btn");
+        btn.textContent = "✅ Message Sent!";
+        btn.style.background = "#22c55e";
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = "Send Message →";
+          btn.style.background = "";
+          btn.disabled = false;
+          document
+            .querySelectorAll(".field-group input, .field-group textarea")
+            .forEach((i) => (i.value = ""));
+        }, 3000);
+      }
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark"),
+        );
+      }
+      if (localStorage.getItem("darkMode") === "true")
+        document.body.classList.add("dark");
+    </script>
+  </body>
+</html>

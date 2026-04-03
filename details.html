@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Details - WheelWorld</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="logo">Wheel<span>World</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="wishlist.html"
+          >❤️ Wishlist <span id="wishCount" class="badge">0</span></a
+        >
+        <a href="login.html" id="loginNav">Login</a>
+        <a href="#" id="logoutNav" onclick="logout()" style="display: none"
+          >Logout</a
+        >
+        <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+      </nav>
+    </header>
+
+    <div class="details-container">
+      <!-- ── LEFT: Image Gallery ── -->
+      <div class="car-image-section">
+        <!-- Main slider -->
+        <div class="slider-wrap">
+          <button
+            class="slider-arrow slider-prev"
+            onclick="slideBy(-1)"
+            aria-label="Previous"
+          >
+            &#8249;
+          </button>
+          <div class="slider-track-wrap">
+            <div class="slider-track" id="sliderTrack"></div>
+          </div>
+          <button
+            class="slider-arrow slider-next"
+            onclick="slideBy(1)"
+            aria-label="Next"
+          >
+            &#8250;
+          </button>
+
+          <!-- Dot indicators -->
+          <div class="slider-dots" id="sliderDots"></div>
+
+          <!-- Slide counter -->
+          <div class="slide-counter" id="slideCounter"></div>
+
+          <!-- View label -->
+          <div class="view-label" id="viewLabel"></div>
+        </div>
+
+        <!-- Thumbnail strip -->
+        <div class="thumb-strip" id="thumbStrip"></div>
+      </div>
+
+      <!-- ── RIGHT: Info Panel ── -->
+      <div class="car-info-section">
+        <p
+          style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px"
+        >
+          <a
+            href="index.html"
+            style="color: var(--primary); text-decoration: none"
+            >Home</a
+          >
+          / <span id="carNameBread"></span>
+        </p>
+        <h1 id="carName"></h1>
+        <div class="price-box"><span id="carPrice"></span></div>
+
+        <div class="specs-grid" id="specsGrid"></div>
+
+        <!-- Colour Picker -->
+        <div class="colour-section" id="colourSection" style="display: none">
+          <div class="colour-section-title">Choose Colour</div>
+          <div class="colour-selected-name" id="colourSelectedName"></div>
+          <div class="colour-swatches" id="colourSwatches"></div>
+        </div>
+
+        <div class="description" id="carDescription"></div>
+
+        <div class="details-buttons">
+          <button class="book-btn" onclick="bookNow()">🛒 Book Now</button>
+          <button
+            class="wishlist-btn"
+            id="wishBtn"
+            onclick="toggleWishlistDetail()"
+          >
+            🤍 Add to Wishlist
+          </button>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+      </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="details.js"></script>
+    <script>
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark"),
+        );
+        document.querySelector(".dark-toggle").textContent =
+          document.body.classList.contains("dark") ? "☀️" : "🌙";
+      }
+      function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+      }
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark");
+        document.querySelector(".dark-toggle").textContent = "☀️";
+      }
+      const u = localStorage.getItem("loggedInUser");
+      if (u) {
+        document.getElementById("loginNav").style.display = "none";
+        document.getElementById("logoutNav").style.display = "inline";
+      }
+      const wl = u
+        ? JSON.parse(localStorage.getItem(u + "_wishlist")) || []
+        : [];
+      document.getElementById("wishCount").textContent = wl.length;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment - WheelWorld</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="logo">Wheel<span>World</span></a>
+      <nav>
+        <a href="index.html">← Back to Home</a>
+      </nav>
+    </header>
+
+    <div class="payment-wrapper">
+      <div class="payment-card">
+        <div style="text-align: center; margin-bottom: 24px">
+          <div style="font-size: 40px; margin-bottom: 8px">💳</div>
+          <h2>Complete Your Booking</h2>
+          <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px">
+            Secure simulated payment gateway
+          </p>
+        </div>
+
+        <div class="booking-info" id="carInfo">
+          <p
+            style="
+              font-size: 12px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              color: var(--text-muted);
+              font-weight: 600;
+              margin-bottom: 8px;
+            "
+          >
+            BOOKING SUMMARY
+          </p>
+          <p
+            id="carName"
+            style="
+              font-size: 16px;
+              font-weight: 700;
+              color: var(--navy);
+              margin-bottom: 4px;
+            "
+          ></p>
+          <div class="price-tag" id="carPrice"></div>
+        </div>
+
+        <div class="payment-form">
+          <div class="field-group" style="margin-bottom: 0">
+            <label
+              style="
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                display: block;
+                margin-bottom: 6px;
+              "
+              >Card Number</label
+            >
+            <input
+              type="text"
+              placeholder="1234  5678  9012  3456"
+              maxlength="19"
+              oninput="formatCard(this)"
+            />
+          </div>
+
+          <div class="payment-row">
+            <div>
+              <label
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                  display: block;
+                  margin-bottom: 6px;
+                "
+                >Expiry Date</label
+              >
+              <input
+                type="text"
+                placeholder="MM / YY"
+                maxlength="7"
+                oninput="formatExpiry(this)"
+              />
+            </div>
+            <div>
+              <label
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                  display: block;
+                  margin-bottom: 6px;
+                "
+                >CVV</label
+              >
+              <input type="password" placeholder="•••" maxlength="3" />
+            </div>
+          </div>
+
+          <div>
+            <label
+              style="
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                display: block;
+                margin-bottom: 6px;
+              "
+              >Cardholder Name</label
+            >
+            <input type="text" placeholder="Name on card" />
+          </div>
+
+          <button class="pay-btn" onclick="makePayment()">
+            🔒 Pay & Confirm Booking
+          </button>
+        </div>
+
+        <p class="secure-note">
+          🔐 256-bit SSL encrypted · Simulated for demo purposes
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const car = localStorage.getItem("bookingCar");
+      const price = localStorage.getItem("bookingPrice");
+
+      if (!car) {
+        window.location.href = "index.html";
+      }
+
+      const colour = localStorage.getItem("bookingColour") || "";
+      document.getElementById("carName").textContent = car || "";
+      document.getElementById("carPrice").textContent = price || "";
+      if (colour) {
+        const colDiv = document.createElement("p");
+        colDiv.style.cssText =
+          "margin-top:6px;font-size:14px;color:var(--text-muted);";
+        colDiv.innerHTML = `Colour: <strong style="color:var(--navy)">${colour}</strong>`;
+        document.getElementById("carInfo").appendChild(colDiv);
+      }
+
+      function formatCard(input) {
+        let v = input.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+        let matches = v.match(/\d{4,16}/g);
+        let match = (matches && matches[0]) || "";
+        let parts = [];
+        for (let i = 0, len = match.length; i < len; i += 4) {
+          parts.push(match.substring(i, i + 4));
+        }
+        input.value = parts.length ? parts.join("  ") : input.value;
+      }
+
+      function formatExpiry(input) {
+        let v = input.value.replace(/\D/g, "");
+        if (v.length >= 2) v = v.substring(0, 2) + " / " + v.substring(2);
+        input.value = v;
+      }
+
+      function makePayment() {
+        const inputs = document.querySelectorAll(".payment-form input");
+        for (const inp of inputs) {
+          if (!inp.value.trim()) {
+            inp.style.borderColor = "var(--primary)";
+            inp.focus();
+            inp.style.boxShadow = "0 0 0 3px rgba(232,56,13,0.15)";
+            return;
+          }
+          inp.style.borderColor = "";
+          inp.style.boxShadow = "";
+        }
+
+        const btn = document.querySelector(".pay-btn");
+        btn.textContent = "⏳ Processing...";
+        btn.disabled = true;
+
+        setTimeout(() => {
+          localStorage.removeItem("bookingCar");
+          localStorage.removeItem("bookingColour");
+          localStorage.removeItem("bookingPrice");
+
+          document.querySelector(".payment-card").innerHTML = `
+          <div style="text-align:center;padding:20px">
+            <div style="font-size:72px;margin-bottom:16px">🎉</div>
+            <h2 style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--navy);margin-bottom:8px">Booking Confirmed!</h2>
+            <p style="color:var(--text-muted);margin-bottom:8px">Your booking for <strong style="color:var(--navy)">${car}</strong> has been confirmed.</p>
+            <p style="font-size:20px;font-weight:800;color:var(--primary);margin-bottom:28px">${price}</p>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:28px">A WheelWorld representative will contact you within 24 hours.</p>
+            <a href="index.html" style="display:inline-block;padding:13px 32px;background:var(--primary);color:white;text-decoration:none;border-radius:10px;font-weight:700;font-size:15px;">← Back to Home</a>
+          </div>`;
+        }, 1800);
+      }
+    </script>
+  </body>
+</html>
